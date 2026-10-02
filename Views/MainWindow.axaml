@@ -1,0 +1,372 @@
+<Window
+	x:Class="GradilApp.Views.MainWindow"
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	Width="1000"
+	Height="700"
+	MinWidth="850"
+	MinHeight="650"
+	MaxWidth="1200"
+	CanResize="True"
+	Title="Gradil">
+
+	<ScrollViewer
+		HorizontalScrollBarVisibility="Disabled"
+		VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Margin="35"
+			Spacing="24">
+
+			<!-- Cabeçalho -->
+			<StackPanel Spacing="5">
+				<TextBlock
+					FontSize="30"
+					FontWeight="Bold"
+					Text="Cálculo de Gradil" />
+				<TextBlock
+					FontSize="14"
+					Foreground="#666666"
+					Text="Informe as características da cerca para calcular os componentes necessários." />
+			</StackPanel>
+
+			<!-- Dados da cerca -->
+			<Border
+				Background="#FAFAFA"
+				BorderBrush="#D9D9D9"
+				BorderThickness="1"
+				CornerRadius="8"
+				Padding="24">
+				<StackPanel Spacing="20">
+					<TextBlock
+						FontSize="20"
+						FontWeight="Bold"
+						Text="Dados da cerca" />
+
+					<!-- Comprimento -->
+					<StackPanel Spacing="7">
+						<TextBlock
+							FontWeight="SemiBold"
+							Text="Comprimento desejado" />
+						<StackPanel
+							Orientation="Horizontal"
+							Spacing="8">
+							<NumericUpDown
+								Width="250"
+								Height="38"
+								Minimum="0.01"
+								Increment="0.01"
+								ShowButtonSpinner="False"
+								Watermark="Ex.: 6"
+								Value="{Binding ComprimentoDesejado}" />
+							<TextBlock
+								VerticalAlignment="Center"
+								Foreground="#666666"
+								Text="metros" />
+						</StackPanel>
+					</StackPanel>
+
+					<!-- Altura -->
+					<StackPanel Spacing="8">
+
+						<TextBlock
+							FontWeight="SemiBold"
+							Text="Altura do gradil" />
+						<StackPanel
+							Orientation="Horizontal"
+							Spacing="12">
+							<RadioButton
+								Content="1.03 m"
+								GroupName="Altura"
+								IsChecked="{Binding Altura103Selecionada}" />
+							<RadioButton
+								Content="1.53 m"
+								GroupName="Altura"
+								IsChecked="{Binding Altura153Selecionada}" />
+
+							<RadioButton
+								Content="2.03 m"
+								GroupName="Altura"
+								IsChecked="{Binding Altura203Selecionada}" />
+						</StackPanel>
+					</StackPanel>
+
+					<!-- Cor -->
+					<StackPanel Spacing="8">
+						<TextBlock
+							FontWeight="SemiBold"
+							Text="Cor" />
+						<Grid
+							ColumnDefinitions="Auto,Auto"
+							RowDefinitions="Auto,Auto"
+							ColumnSpacing="30"
+							RowSpacing="10">
+
+							<RadioButton
+								Grid.Row="0"
+								Grid.Column="0"
+								Content="Sem pintura"
+								GroupName="Cor"
+								IsChecked="{Binding SemPinturaSelecionada}" />
+							<RadioButton
+								Grid.Row="0"
+								Grid.Column="1"
+								Content="Branca"
+								GroupName="Cor"
+								IsChecked="{Binding BrancaSelecionada}" />
+							<RadioButton
+								Grid.Row="1"
+								Grid.Column="0"
+								Content="Preta"
+								GroupName="Cor"
+								IsChecked="{Binding PretaSelecionada}" />
+							<RadioButton
+								Grid.Row="1"
+								Grid.Column="1"
+								Content="Verde"
+								GroupName="Cor"
+								IsChecked="{Binding VerdeSelecionada}" />
+						</Grid>
+					</StackPanel>
+
+					<!-- Ação para calcular -->
+					<StackPanel
+						Margin="0,5,0,0"
+						Orientation="Horizontal">
+						<Button
+							Width="130"
+							Height="40"
+							Command="{Binding CalcularCommand}"
+							Content="Calcular"
+							HorizontalContentAlignment="Center"
+							VerticalContentAlignment="Center" />
+					</StackPanel>
+				</StackPanel>
+			</Border>
+
+			<!-- Resultado -->
+			<Border
+				Background="#FAFAFA"
+				BorderBrush="#D9D9D9"
+				BorderThickness="1"
+				CornerRadius="8"
+				Padding="24">
+				<StackPanel Spacing="20">
+					<StackPanel Spacing="4">
+						<TextBlock
+							FontSize="20"
+							FontWeight="Bold"
+							Text="Resultado" />
+						<TextBlock
+							Foreground="#666666"
+							Text="Componentes necessários para a fabricação." />
+					</StackPanel>
+
+					<!-- Comprimento -->
+					<Border
+						Background="White"
+						BorderBrush="#E0E0E0"
+						BorderThickness="1"
+						CornerRadius="6"
+						Padding="15">
+						<StackPanel Spacing="5">
+							<TextBlock
+								FontSize="13"
+								Foreground="#666666"
+								Text="COMPRIMENTO VENDIDO" />
+							<TextBlock
+								FontSize="22"
+								FontWeight="Bold"
+								Text="{Binding Resultado.ComprimentoVendido,
+									StringFormat='{}{0:F2} m'}" />
+							<TextBlock
+								Foreground="#666666"
+								Text="{Binding DiferencaComprimentoTexto}" />
+						</StackPanel>
+					</Border>
+
+					<!-- Componentes para a cerca -->
+					<Grid
+						ColumnDefinitions="*,*,*,*"
+						ColumnSpacing="12">
+
+						<!-- Telas -->
+						<Border
+							Grid.Column="0"
+							Background="White"
+							BorderBrush="#E0E0E0"
+							BorderThickness="1"
+							CornerRadius="6"
+							Padding="15">
+							<StackPanel Spacing="5">
+								<TextBlock
+									Foreground="#666666"
+									Text="TELAS" />
+								<TextBlock
+									FontSize="22"
+									FontWeight="Bold"
+									Text="{Binding Resultado.Telas}" />
+							</StackPanel>
+						</Border>
+
+						<!-- Postes -->
+						<Border
+							Grid.Column="1"
+							Background="White"
+							BorderBrush="#E0E0E0"
+							BorderThickness="1"
+							CornerRadius="6"
+							Padding="15">
+							<StackPanel Spacing="5">
+								<TextBlock
+									Foreground="#666666"
+									Text="POSTES" />
+								<TextBlock
+									FontSize="22"
+									FontWeight="Bold"
+									Text="{Binding Resultado.Postes}" />
+							</StackPanel>
+						</Border>
+
+						<!-- Fixadores -->
+						<Border
+							Grid.Column="2"
+							Background="White"
+							BorderBrush="#E0E0E0"
+							BorderThickness="1"
+							CornerRadius="6"
+							Padding="15">
+							<StackPanel Spacing="5">
+								<TextBlock
+									Foreground="#666666"
+									Text="FIXADORES" />
+								<TextBlock
+									FontSize="22"
+									FontWeight="Bold"
+									Text="{Binding Resultado.Fixadores}" />
+							</StackPanel>
+						</Border>
+
+						<!-- Parafusos -->
+						<Border
+							Grid.Column="3"
+							Background="White"
+							BorderBrush="#E0E0E0"
+							BorderThickness="1"
+							CornerRadius="6"
+							Padding="15">
+							<StackPanel Spacing="5">
+								<TextBlock
+									Foreground="#666666"
+									Text="PARAFUSOS" />
+								<TextBlock
+									FontSize="22"
+									FontWeight="Bold"
+									Text="{Binding Resultado.Parafusos}" />
+							</StackPanel>
+						</Border>
+					</Grid>
+
+					<!-- Ações -->
+					<StackPanel
+						Orientation="Horizontal"
+						Spacing="10"
+						Margin="0,5,0,0">
+						<Button
+							Command="{Binding ConfirmarPedidoCommand}"
+							Content="Realizar pedido"
+							Padding="20,10" />
+						<Button
+							Command="{Binding PedidosCommand}"
+							Content="Ver pedidos confirmados"
+							Padding="20,10" />
+					</StackPanel>
+				</StackPanel>
+			</Border>
+
+			<!-- Desenho -->
+			<Border
+				Background="#FAFAFA"
+				BorderBrush="#D9D9D9"
+				BorderThickness="1"
+				CornerRadius="8"
+				Padding="24">
+				<StackPanel Spacing="15">
+					<StackPanel Spacing="4">
+						<TextBlock
+							FontSize="20"
+							FontWeight="Bold"
+							Text="Desenho simplificado" />
+						<TextBlock
+							Text="Representação gráfica limitada a 250 m."
+							IsVisible="{Binding DesenhoLimitado}"
+							FontSize="13"
+							Opacity="0.7"
+							Margin="0,0,0,10" />
+						<TextBlock
+							Foreground="#666666"
+							Text="{Binding ModulosDesenho.Count,
+								StringFormat='Representação de {0} telas'}" />
+					</StackPanel>
+					<ScrollViewer
+						HorizontalScrollBarVisibility="Auto"
+						VerticalScrollBarVisibility="Disabled"
+						HorizontalAlignment="Stretch">
+						<Border
+							Height="150"
+							HorizontalAlignment="Left"
+							Background="White"
+							BorderBrush="#D0D0D0"
+							BorderThickness="1"
+							CornerRadius="5"
+							Padding="15">
+							<StackPanel
+								Orientation="Horizontal"
+								VerticalAlignment="Center">
+								<!-- Poste inicial -->
+								<Border
+									Width="8"
+									Height="110"
+									Background="#333333"
+									CornerRadius="2" />
+								<ItemsControl ItemsSource="{Binding ModulosDesenho}">
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<StackPanel Orientation="Horizontal" />
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<Grid
+												Width="{Binding Largura}"
+												Height="110">
+
+												<!-- Tela -->
+												<Border
+													Margin="0,20,0,20"
+													Background="#F0F0F0"
+													BorderBrush="#999999"
+													BorderThickness="1" />
+
+												<!-- Poste -->
+												<Border
+													Width="8"
+													Height="110"
+													HorizontalAlignment="Right"
+													Background="#333333"
+													CornerRadius="2" />
+
+											</Grid>
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+							</StackPanel>
+						</Border>
+					</ScrollViewer>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+	</ScrollViewer>
+</Window>

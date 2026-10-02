@@ -1,0 +1,175 @@
+<Window
+	x:Class="GradilApp.Views.ConfirmacaoPedidoWindow"
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Width="550"
+	Height="570"
+	MinWidth="550"
+	MinHeight="550"
+	CanResize="True"
+	WindowStartupLocation="CenterOwner"
+	Title="Realizar pedido">
+
+	<ScrollViewer
+		VerticalScrollBarVisibility="Auto">
+
+		<StackPanel
+			Margin="30"
+			Spacing="20">
+
+			<StackPanel Spacing="5">
+				<TextBlock
+					FontSize="28"
+					FontWeight="Bold"
+					Text="Resumo do pedido" />
+				<TextBlock
+					Foreground="#666666"
+					Text="Confira os dados antes de realizar o pedido." />
+			</StackPanel>
+
+			<Border
+				Background="#FAFAFA"
+				BorderBrush="#D9D9D9"
+				BorderThickness="1"
+				CornerRadius="8"
+				Padding="20">
+				<StackPanel Spacing="15">
+					<TextBlock
+						FontSize="20"
+						FontWeight="Bold"
+						Text="Dados da cerca" />
+					<Grid
+						ColumnDefinitions="*,*"
+						RowDefinitions="Auto,Auto"
+						ColumnSpacing="30"
+						RowSpacing="15">
+						<StackPanel
+							Grid.Row="0"
+							Grid.Column="0"
+							Spacing="3">
+							<TextBlock
+								FontSize="12"
+								Foreground="#666666"
+								Text="METROS REQUISITADOS" />
+							<TextBlock
+								FontSize="16"
+								FontWeight="SemiBold"
+								Text="{Binding Gradil.Comprimento,
+									StringFormat='{}{0:F2} m'}" />
+						</StackPanel>
+						<StackPanel
+							Grid.Row="0"
+							Grid.Column="1"
+							Spacing="3">
+							<TextBlock
+								FontSize="12"
+								Foreground="#666666"
+								Text="METROS VENDIDOS" />
+							<TextBlock
+								FontSize="16"
+								FontWeight="SemiBold"
+								Text="{Binding Componentes.ComprimentoVendido,
+									StringFormat='{}{0:F2} m'}" />
+						</StackPanel>
+						<StackPanel
+							Grid.Row="1"
+							Grid.Column="0"
+							Spacing="3">
+							<TextBlock
+								FontSize="12"
+								Foreground="#666666"
+								Text="ALTURA" />
+							<TextBlock
+								FontSize="16"
+								FontWeight="SemiBold"
+								Text="{Binding Gradil.AlturaDescricao}" />
+						</StackPanel>
+						<StackPanel
+							Grid.Row="1"
+							Grid.Column="1"
+							Spacing="3">
+							<TextBlock
+								FontSize="12"
+								Foreground="#666666"
+								Text="COR" />
+							<TextBlock
+								FontSize="16"
+								FontWeight="SemiBold"
+								Text="{Binding Gradil.CorDescricao}" />
+						</StackPanel>
+					</Grid>
+				</StackPanel>
+			</Border>
+
+			<Border
+				Background="#FAFAFA"
+				BorderBrush="#D9D9D9"
+				BorderThickness="1"
+				CornerRadius="8"
+				Padding="20">
+				<StackPanel Spacing="15">
+					<TextBlock
+						FontSize="20"
+						FontWeight="Bold"
+						Text="Itens necessários" />
+
+					<Grid
+						ColumnDefinitions="*,Auto"
+						RowDefinitions="Auto,Auto,Auto,Auto"
+						RowSpacing="10">
+						<TextBlock
+							Grid.Row="0"
+							Grid.Column="0"
+							Text="Telas" />
+						<TextBlock
+							Grid.Row="0"
+							Grid.Column="1"
+							FontWeight="Bold"
+							Text="{Binding Componentes.Telas}" />
+
+						<TextBlock
+							Grid.Row="1"
+							Grid.Column="0"
+							Text="Postes" />
+						<TextBlock
+							Grid.Row="1"
+							Grid.Column="1"
+							FontWeight="Bold"
+							Text="{Binding Componentes.Postes}" />
+						<TextBlock
+							Grid.Row="2"
+							Grid.Column="0"
+							Text="Fixadores" />
+						<TextBlock
+							Grid.Row="2"
+							Grid.Column="1"
+							FontWeight="Bold"
+							Text="{Binding Componentes.Fixadores}" />
+						<TextBlock
+							Grid.Row="3"
+							Grid.Column="0"
+							Text="Parafusos" />
+						<TextBlock
+							Grid.Row="3"
+							Grid.Column="1"
+							FontWeight="Bold"
+							Text="{Binding Componentes.Parafusos}" />
+					</Grid>
+				</StackPanel>
+			</Border>
+			<StackPanel
+				Orientation="Horizontal"
+				HorizontalAlignment="Right"
+				Spacing="10">
+				<Button
+                	Content="Cancelar pedido"
+                	Padding="20,10"
+                	Click="OnCancelarPedidoClick" />
+                <Button
+                	Content="Realizar pedido"
+                	Padding="20,10"
+                	Click="OnRealizarPedidoClick" />
+			</StackPanel>
+		</StackPanel>
+	</ScrollViewer>
+</Window>

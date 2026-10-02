@@ -1,0 +1,261 @@
+<Window
+	x:Class="GradilApp.Views.PedidosWindow"
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Width="750"
+	Height="600"
+	MinWidth="650"
+	MinHeight="450"
+	MaxWidth="950"
+	CanResize="True"
+	Title="Pedidos confirmados">
+
+	<ScrollViewer
+		HorizontalScrollBarVisibility="Disabled"
+		VerticalScrollBarVisibility="Auto">
+		<StackPanel
+			Margin="30"
+			Spacing="20">
+
+			<!-- Cabeçalho -->
+			<StackPanel Spacing="5">
+				<TextBlock
+					FontSize="28"
+					FontWeight="Bold"
+					Text="Pedidos confirmados" />
+				<TextBlock
+					Foreground="#666666"
+					Text="Histórico dos pedidos confirmados." />
+			</StackPanel>
+
+			<!-- Lista de pedidos -->
+			<ListBox
+				ItemsSource="{Binding PedidosConfirmados}"
+				BorderThickness="0">
+
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+
+						<Border
+							Background="#FAFAFA"
+							BorderBrush="#D9D9D9"
+							BorderThickness="1"
+							CornerRadius="8"
+							Margin="0,0,0,15"
+							Padding="20">
+
+							<StackPanel Spacing="15">
+
+								<!-- Cabeçalho do pedido -->
+								<Grid
+									ColumnDefinitions="*,Auto">
+
+									<StackPanel
+										Grid.Column="0"
+										Spacing="3">
+
+										<TextBlock
+											FontSize="17"
+											FontWeight="Bold"
+											Text="{Binding Gradil.Comprimento,
+												StringFormat='Comprimento desejado: {0:F2} m'}" />
+
+										<TextBlock
+											Foreground="#666666"
+											Text="{Binding DataConfirmacao,
+												StringFormat='Confirmado em: {0:dd/MM/yyyy HH:mm}'}" />
+
+									</StackPanel>
+
+									<Button
+										Grid.Column="1"
+										Command="{Binding $parent[Window].DataContext.ExcluirPedidoCommand}"
+										CommandParameter="{Binding}"
+										Content="Excluir"
+										Padding="15,8" />
+
+								</Grid>
+
+								<!-- Dados da cerca -->
+								<Grid
+									ColumnDefinitions="*,*"
+									RowDefinitions="Auto,Auto,Auto"
+									ColumnSpacing="30"
+									RowSpacing="8">
+
+									<StackPanel
+										Grid.Row="0"
+										Grid.Column="0"
+										Spacing="2">
+
+										<TextBlock
+											FontSize="12"
+											Foreground="#666666"
+											Text="COMPRIMENTO VENDIDO" />
+
+										<TextBlock
+											FontWeight="SemiBold"
+											Text="{Binding Componentes.ComprimentoVendido,
+												StringFormat='{}{0:F2} m'}" />
+
+									</StackPanel>
+
+									<StackPanel
+										Grid.Row="0"
+										Grid.Column="1"
+										Spacing="2">
+
+										<TextBlock
+											FontSize="12"
+											Foreground="#666666"
+											Text="ALTURA" />
+
+										<TextBlock
+											FontWeight="SemiBold"
+											Text="{Binding Gradil.AlturaDescricao}" />
+
+									</StackPanel>
+
+									<StackPanel
+										Grid.Row="1"
+										Grid.Column="0"
+										Spacing="2">
+
+										<TextBlock
+											FontSize="12"
+											Foreground="#666666"
+											Text="COR" />
+
+										<TextBlock
+											FontWeight="SemiBold"
+											Text="{Binding Gradil.CorDescricao}" />
+
+									</StackPanel>
+
+								</Grid>
+
+								<!-- Componentes -->
+								<Grid
+									ColumnDefinitions="*,*,*,*"
+									ColumnSpacing="10">
+
+									<Border
+										Grid.Column="0"
+										Background="White"
+										BorderBrush="#E0E0E0"
+										BorderThickness="1"
+										CornerRadius="5"
+										Padding="10">
+
+										<StackPanel Spacing="3">
+
+											<TextBlock
+												FontSize="11"
+												Foreground="#666666"
+												Text="TELAS" />
+
+											<TextBlock
+												FontSize="18"
+												FontWeight="Bold"
+												Text="{Binding Componentes.Telas}" />
+
+										</StackPanel>
+
+									</Border>
+
+									<Border
+										Grid.Column="1"
+										Background="White"
+										BorderBrush="#E0E0E0"
+										BorderThickness="1"
+										CornerRadius="5"
+										Padding="10">
+
+										<StackPanel Spacing="3">
+
+											<TextBlock
+												FontSize="11"
+												Foreground="#666666"
+												Text="POSTES" />
+
+											<TextBlock
+												FontSize="18"
+												FontWeight="Bold"
+												Text="{Binding Componentes.Postes}" />
+
+										</StackPanel>
+
+									</Border>
+
+									<Border
+										Grid.Column="2"
+										Background="White"
+										BorderBrush="#E0E0E0"
+										BorderThickness="1"
+										CornerRadius="5"
+										Padding="10">
+
+										<StackPanel Spacing="3">
+
+											<TextBlock
+												FontSize="11"
+												Foreground="#666666"
+												Text="FIXADORES" />
+
+											<TextBlock
+												FontSize="18"
+												FontWeight="Bold"
+												Text="{Binding Componentes.Fixadores}" />
+
+										</StackPanel>
+
+									</Border>
+
+									<Border
+										Grid.Column="3"
+										Background="White"
+										BorderBrush="#E0E0E0"
+										BorderThickness="1"
+										CornerRadius="5"
+										Padding="10">
+
+										<StackPanel Spacing="3">
+
+											<TextBlock
+												FontSize="11"
+												Foreground="#666666"
+												Text="PARAFUSOS" />
+
+											<TextBlock
+												FontSize="18"
+												FontWeight="Bold"
+												Text="{Binding Componentes.Parafusos}" />
+
+										</StackPanel>
+
+									</Border>
+
+								</Grid>
+
+							</StackPanel>
+
+						</Border>
+
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+
+			</ListBox>
+
+			<!-- Ação geral -->
+			<StackPanel
+				Orientation="Horizontal"
+				HorizontalAlignment="Left">
+
+				<Button
+					Command="{Binding ExcluirTodosPedidosCommand}"
+					Content="Excluir todos os pedidos"
+					Padding="18,10" />
+			</StackPanel>
+		</StackPanel>
+	</ScrollViewer>
+</Window>
