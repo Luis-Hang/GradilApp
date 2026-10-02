@@ -1,0 +1,55 @@
+name: Windows Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish -c Release -r win-x64 --self-contained true --no-restore
+
+      - name: Verify executable
+        shell: powershell
+        run: |
+          $exe = "bin/Release/net6.0/win-x64/publish/GradilApp.exe"
+
+          if (!(Test-Path $exe)) {
+            Write-Error "GradilApp.exe não foi encontrado."
+            exit 1
+          }
+
+          Write-Host "Executável encontrado:"
+          Get-Item $exe
+
+      - name: Create ZIP
+        shell: powershell
+        run: |
+          Compress-Archive `
+            -Path "bin/Release/net6.0/win-x64/publish/*" `
+            -DestinationPath "GradilApp-Windows-x64.zip"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GradilApp-Windows-x64
+          path: GradilApp-Windows-x64.zip
